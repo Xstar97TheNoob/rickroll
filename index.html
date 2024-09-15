@@ -2,6 +2,7 @@
 <html>
    <head>
        <meta name="description" id="metaDescription" content="">
+       <title></title>
    </head>
    <body>
        <video autoplay loop width="100%">
@@ -43,17 +44,11 @@
               document.getElementById("metaDescription").content = descriptions[randomIndex]; // Set random description
           }
 
-          // Redirect to video URL
-          function redirect() {
-              window.location.href = "rickroll.mp4";
-          }
-
           function onload() {
               setRandomMeta();
-              redirect();
           }
 
-          window.onload = onload();
+          window.onload = onload;
        </script>
    </body>
 </html>
