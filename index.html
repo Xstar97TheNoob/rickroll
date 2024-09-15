@@ -1,33 +1,56 @@
 <!DOCTYPE html>
 <html>
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta name="description" content="">
+       <meta name="title" content="">
+       
+       <script>
+           // Arrays of random titles and descriptions
+           const titles = [
+               "Epic Video Surprise!",
+               "You'll Never Guess This Video",
+               "A Must-See Video!",
+               "Top Secret Video",
+               "You Won't Believe This Video"
+           ];
+
+           const descriptions = [
+               "Watch the most unexpected video ever!",
+               "This video will change your life, or at least make you smile.",
+               "Prepare for an unforgettable video experience.",
+               "The most viral video you'll watch today!",
+               "A video that defines entertainment."
+           ];
+
+           function getRandomElement(arr) {
+               return arr[Math.floor(Math.random() * arr.length)];
+           }
+
+           function setMetaTags() {
+               const randomTitle = getRandomElement(titles);
+               const randomDescription = getRandomElement(descriptions);
+               
+               // Set the title
+               document.title = randomTitle;
+
+               // Set the meta title and description tags
+               document.querySelector('meta[name="title"]').setAttribute("content", randomTitle);
+               document.querySelector('meta[name="description"]').setAttribute("content", randomDescription);
+           }
+
+           function onload() {
+               setMetaTags();
+           }
+
+           window.onload = onload;
+       </script>
+   </head>
    <body>
        <video autoplay loop width="100%">
-
-    <source src="rickroll.mp4"
-            type="video/mp4">
-
-    Sorry, your browser doesn't support embedded videos.
-</video>
-      <script>
-         // Change the variables below to your liking
-         const currentURL = "rickroll.mp4";
-         const pageTitle = "Loading...";
-         // End of changable variables
-         
-         function setTitle() {
-            document.title = pageTitle;
-         }
-         
-         function redirect() {
-            window.location.href = currentURL;
-         }
-         
-         function onload() {
-            setTitle();
-            redirect();
-         }
-         
-         window.onload = onload();
-       </script>
+           <source src="rickroll.mp4" type="video/mp4">
+           Sorry, your browser doesn't support embedded videos.
+       </video>
    </body>
 </html>
