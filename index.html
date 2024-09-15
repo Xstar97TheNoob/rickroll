@@ -1,71 +1,59 @@
 <!DOCTYPE html>
 <html>
    <head>
-       <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <meta name="description" content="">
-       <meta name="title" content="">
-       
-       <script>
-           // Arrays of random titles and descriptions
-           const titles = [
-               "Epic Video Surprise!",
-               "You'll Never Guess This Video",
-               "A Must-See Video!",
-               "Top Secret Video",
-               "You Won't Believe This Video"
-           ];
-
-           const descriptions = [
-               "Watch the most unexpected video ever!",
-               "This video will change your life, or at least make you smile.",
-               "Prepare for an unforgettable video experience.",
-               "The most viral video you'll watch today!",
-               "A video that defines entertainment."
-           ];
-
-           function getRandomElement(arr) {
-               return arr[Math.floor(Math.random() * arr.length)];
-           }
-
-           function setMetaTags() {
-               const randomTitle = getRandomElement(titles);
-               const randomDescription = getRandomElement(descriptions);
-               
-               // Set the title
-               document.title = randomTitle;
-
-               // Set the meta title and description tags
-               document.querySelector('meta[name="title"]').setAttribute("content", randomTitle);
-               document.querySelector('meta[name="description"]').setAttribute("content", randomDescription);
-           }
-
-           function onVideoLoaded() {
-               // Show video after it's loaded
-               const videoElement = document.getElementById("rickrollVideo");
-               videoElement.style.display = "block";  // Make video visible
-               videoElement.play();  // Start playing the video
-           }
-
-           function onload() {
-               setMetaTags();
-
-               const videoElement = document.getElementById("rickrollVideo");
-               
-               // Hide the video until it's loaded
-               videoElement.style.display = "none";
-               
-               // Wait for video to preload before showing it
-               videoElement.oncanplaythrough = onVideoLoaded;
-           }
-
-           window.onload = onload;
-       </script>
+       <meta name="description" id="metaDescription" content="">
    </head>
    <body>
-       <video id="rickrollVideo" preload="auto" loop width="100%">
+       <video autoplay loop width="100%">
            <source src="rickroll.mp4" type="video/mp4">
            Sorry, your browser doesn't support embedded videos.
        </video>
+       <script>
+          // Array of random titles and descriptions
+          const titles = [
+              "The Ultimate Video Experience!",
+              "Prepare to be Surprised!",
+              "Watch and Be Amazed!",
+              "Your Video Adventure Awaits!",
+              "A Video Like No Other!",
+              "You Won’t Believe This Video!",
+              "The Video Everyone’s Talking About!",
+              "Get Ready for Something Special!",
+              "This Will Blow Your Mind!",
+              "The Best Video You’ll Watch Today!"
+          ];
+
+          const descriptions = [
+              "Check out this incredible video that will surprise you!",
+              "Experience the most exciting video of the year!",
+              "This video will keep you entertained for hours!",
+              "A must-watch video you can’t miss!",
+              "Prepare yourself for a video that breaks the internet!",
+              "This video will change your day!",
+              "Get ready for a video adventure!",
+              "The video you've been waiting for is here!",
+              "You won't be able to stop watching this video!",
+              "This video is going viral for all the right reasons!"
+          ];
+
+          // Function to set a random title and description
+          function setRandomMeta() {
+              const randomIndex = Math.floor(Math.random() * titles.length);
+              document.title = titles[randomIndex]; // Set random title
+              document.getElementById("metaDescription").content = descriptions[randomIndex]; // Set random description
+          }
+
+          // Redirect to video URL
+          function redirect() {
+              window.location.href = "rickroll.mp4";
+          }
+
+          function onload() {
+              setRandomMeta();
+              redirect();
+          }
+
+          window.onload = onload();
+       </script>
    </body>
 </html>
