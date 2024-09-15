@@ -3,7 +3,20 @@
    <head>
        <meta charset="UTF-8">
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>Loading...</title>
+       <meta name="description" id="metaDescription" content="">
+       
+       <!-- Open Graph meta tags -->
+       <meta property="og:title" id="ogTitle" content="">
+       <meta property="og:description" id="ogDescription" content="">
+       <meta property="og:url" id="ogUrl" content="">
+       <meta property="og:type" content="video.movie">
+       
+       <!-- Twitter Card meta tags -->
+       <meta name="twitter:card" content="summary_large_image">
+       <meta name="twitter:title" id="twitterTitle" content="">
+       <meta name="twitter:description" id="twitterDescription" content="">
+
+       <title></title>
        <style>
            body, html {
                margin: 0;
@@ -20,20 +33,132 @@
                height: 100%;
                object-fit: cover;
            }
+           /* Toast Styles */
+           .toast {
+               visibility: hidden;
+               min-width: 250px;
+               margin-left: -125px;
+               background-color: #333;
+               color: #fff;
+               text-align: center;
+               border-radius: 2px;
+               padding: 16px;
+               position: fixed;
+               z-index: 1;
+               left: 50%;
+               bottom: 30px;
+               font-size: 17px;
+               box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+           }
+           .toast.show {
+               visibility: visible;
+               -webkit-animation: fadein 0.5s, fadeout 0.5s 4s;
+               animation: fadein 0.5s, fadeout 0.5s 4s;
+           }
+           @-webkit-keyframes fadein {
+               from {opacity: 0;} 
+               to {opacity: 1;}
+           }
+           @keyframes fadein {
+               from {opacity: 0;} 
+               to {opacity: 1;}
+           }
+           @-webkit-keyframes fadeout {
+               from {opacity: 1;} 
+               to {opacity: 0;}
+           }
+           @keyframes fadeout {
+               from {opacity: 1;} 
+               to {opacity: 0;}
+           }
        </style>
    </head>
    <body>
-       <video id="rickrollVideo" autoplay loop controls>
+       <video id="rickrollVideo" autoplay loop muted>
            <source src="rickroll.mp4" type="video/mp4">
            Sorry, your browser doesn't support embedded videos.
        </video>
 
+       <div id="toast" class="toast">Autoplay failed. Please play the video manually.</div>
+
        <script>
-           // Function to automatically play the video
-           window.onload = function() {
-               var video = document.getElementById('rickrollVideo');
-               video.play(); // Autoplay the video
-           };
+          // Array of random titles and descriptions
+          const titles = [
+              "The Ultimate Video Experience!",
+              "Prepare to be Surprised!",
+              "Watch and Be Amazed!",
+              "Your Video Adventure Awaits!",
+              "A Video Like No Other!",
+              "You Won’t Believe This Video!",
+              "The Video Everyone’s Talking About!",
+              "Get Ready for Something Special!",
+              "This Will Blow Your Mind!",
+              "The Best Video You’ll Watch Today!"
+          ];
+
+          const descriptions = [
+              "Check out this incredible video that will surprise you!",
+              "Experience the most exciting video of the year!",
+              "This video will keep you entertained for hours!",
+              "A must-watch video you can’t miss!",
+              "Prepare yourself for a video that breaks the internet!",
+              "This video will change your day!",
+              "Get ready for a video adventure!",
+              "The video you've been waiting for is here!",
+              "You won't be able to stop watching this video!",
+              "This video is going viral for all the right reasons!"
+          ];
+
+          // Function to get random title and description
+          function getRandomMeta() {
+              const randomIndex = Math.floor(Math.random() * titles.length);
+              return {
+                  title: titles[randomIndex],
+                  description: descriptions[randomIndex]
+              };
+          }
+
+          // Function to set meta information
+          function setMeta() {
+              const meta = getRandomMeta();
+
+              // Set title and description
+              document.title = meta.title;
+              document.getElementById("metaDescription").content = meta.description;
+
+              // Set Open Graph and Twitter Card meta tags
+              document.getElementById("ogTitle").content = meta.title;
+              document.getElementById("ogDescription").content = meta.description;
+              document.getElementById("ogUrl").content = window.location.href;
+
+              document.getElementById("twitterTitle").content = meta.title;
+              document.getElementById("twitterDescription").content = meta.description;
+          }
+
+          // Function to show toast notification
+          function showToast(message) {
+              var toast = document.getElementById('toast');
+              toast.textContent = message;
+              toast.className = 'toast show';
+              setTimeout(function() { 
+                  toast.className = toast.className.replace("show", ""); 
+              }, 5000); // Hide toast after 5 seconds
+          }
+
+          // Function to ensure video autoplay
+          function ensureAutoplay() {
+              var video = document.getElementById('rickrollVideo');
+              video.play().catch(function(error) {
+                  console.log('Autoplay failed:', error);
+                  showToast('Autoplay failed. Please play the video manually.');
+              });
+          }
+
+          // On page load
+          window.onload = function() {
+              setMeta();
+              ensureAutoplay();
+          };
        </script>
    </body>
 </html>
