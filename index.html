@@ -1,125 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-   <head>
-       <!-- Meta description -->
-       <meta name="description" id="metaDescription" content="">
-
-       <!-- Open Graph meta tags for social preview -->
-       <meta property="og:title" id="ogTitle" content="">
-       <meta property="og:description" id="ogDescription" content="">
-       <meta property="og:image" id="ogImage" content="preview.jpg"> <!-- Default image -->
-       <meta property="og:url" id="ogUrl" content="">
-       <meta property="og:type" content="video.movie">
-
-       <!-- Twitter Card meta tags for social preview -->
-       <meta name="twitter:card" content="summary_large_image">
-       <meta name="twitter:title" id="twitterTitle" content="">
-       <meta name="twitter:description" id="twitterDescription" content="">
-       <meta name="twitter:image" id="twitterImage" content="preview.jpg"> <!-- Default image -->
-
-       <title></title>
-   </head>
+<html>
    <body>
        <video autoplay loop width="100%">
-           <source src="rickroll.mp4" type="video/mp4">
-           Sorry, your browser doesn't support embedded videos.
-       </video>
-       <script>
-          // Array of random titles and descriptions
-          const titles = [
-              "The Ultimate Video Experience!",
-              "Prepare to be Surprised!",
-              "Watch and Be Amazed!",
-              "Your Video Adventure Awaits!",
-              "A Video Like No Other!",
-              "You Won’t Believe This Video!",
-              "The Video Everyone’s Talking About!",
-              "Get Ready for Something Special!",
-              "This Will Blow Your Mind!",
-              "The Best Video You’ll Watch Today!"
-          ];
 
-          const descriptions = [
-              "Check out this incredible video that will surprise you!",
-              "Experience the most exciting video of the year!",
-              "This video will keep you entertained for hours!",
-              "A must-watch video you can’t miss!",
-              "Prepare yourself for a video that breaks the internet!",
-              "This video will change your day!",
-              "Get ready for a video adventure!",
-              "The video you've been waiting for is here!",
-              "You won't be able to stop watching this video!",
-              "This video is going viral for all the right reasons!"
-          ];
+    <source src="rickroll.mp4"
+            type="video/mp4">
 
-          // Function to get random title and description
-          function getRandomMeta() {
-              const randomIndex = Math.floor(Math.random() * titles.length);
-              return {
-                  title: titles[randomIndex],
-                  description: descriptions[randomIndex]
-              };
-          }
-
-          // Function to get title and description by id
-          function getMetaById(id) {
-              const index = parseInt(id, 10);
-              if (index >= 0 && index < titles.length) {
-                  return {
-                      title: titles[index],
-                      description: descriptions[index]
-                  };
-              } else {
-                  return getRandomMeta(); // Fallback to random if id is out of bounds
-              }
-          }
-
-          // Function to handle setting meta info, including Open Graph and Twitter Cards
-          function setMeta() {
-              const currentURL = new URL(window.location.href);
-              const params = new URLSearchParams(currentURL.search);
-
-              let meta;
-
-              // Check if 'id' param exists
-              if (params.has("id")) {
-                  meta = getMetaById(params.get("id"));
-              } else {
-                  meta = getRandomMeta();
-              }
-
-              // Override if 'title' and 'description' params exist
-              if (params.has("title") && params.has("description")) {
-                  document.title = params.get("title");
-                  document.getElementById("metaDescription").content = params.get("description");
-              } else {
-                  document.title = meta.title;
-                  document.getElementById("metaDescription").content = meta.description;
-              }
-
-              // Set Open Graph and Twitter Card meta tags
-              document.getElementById("ogTitle").content = document.title;
-              document.getElementById("ogDescription").content = document.getElementById("metaDescription").content;
-              document.getElementById("ogUrl").content = currentURL.href;
-
-              document.getElementById("twitterTitle").content = document.title;
-              document.getElementById("twitterDescription").content = document.getElementById("metaDescription").content;
-          }
-
-          // Redirect to video after 2 seconds
-          function redirectToVideo() {
-              setTimeout(() => {
-                  window.location.href = "rickroll.mp4";  // Redirect to the video
-              }, 2000);  // 2 seconds delay before redirect
-          }
-
-          // Run on page load
-          function onload() {
-              setMeta();
-              redirectToVideo();
-          }
-
-          window.onload = onload;
+    Sorry, your browser doesn't support embedded videos.
+</video>
+      <script>
+         // Change the variables below to your liking
+         const currentURL = "rickroll.mp4";
+         const pageTitle = "Loading...";
+         // End of changable variables
+         
+         function setTitle() {
+            document.title = pageTitle;
+         }
+         
+         function redirect() {
+            window.location.href = currentURL;
+         }
+         
+         function onload() {
+            setTitle();
+            redirect();
+         }
+         
+         window.onload = onload();
        </script>
    </body>
 </html>
