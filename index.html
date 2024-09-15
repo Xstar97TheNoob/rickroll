@@ -1,7 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
    <head>
+       <!-- Meta description -->
        <meta name="description" id="metaDescription" content="">
+
+       <!-- Open Graph meta tags for social preview -->
+       <meta property="og:title" id="ogTitle" content="">
+       <meta property="og:description" id="ogDescription" content="">
+       <meta property="og:image" id="ogImage" content="preview.jpg"> <!-- Default image -->
+       <meta property="og:url" id="ogUrl" content="">
+       <meta property="og:type" content="video.movie">
+
+       <!-- Twitter Card meta tags for social preview -->
+       <meta name="twitter:card" content="summary_large_image">
+       <meta name="twitter:title" id="twitterTitle" content="">
+       <meta name="twitter:description" id="twitterDescription" content="">
+       <meta name="twitter:image" id="twitterImage" content="preview.jpg"> <!-- Default image -->
+
+       <title></title>
    </head>
    <body>
        <video autoplay loop width="100%">
@@ -58,13 +74,13 @@
               }
           }
 
-          // Function to handle redirect after setting meta info
-          function redirectWithMeta() {
+          // Function to handle setting meta info, including Open Graph and Twitter Cards
+          function setMeta() {
               const currentURL = new URL(window.location.href);
               const params = new URLSearchParams(currentURL.search);
 
               let meta;
-              
+
               // Check if 'id' param exists
               if (params.has("id")) {
                   meta = getMetaById(params.get("id"));
@@ -81,13 +97,29 @@
                   document.getElementById("metaDescription").content = meta.description;
               }
 
-              // Delay redirect to ensure title and description are updated
+              // Set Open Graph and Twitter Card meta tags
+              document.getElementById("ogTitle").content = document.title;
+              document.getElementById("ogDescription").content = document.getElementById("metaDescription").content;
+              document.getElementById("ogUrl").content = currentURL.href;
+
+              document.getElementById("twitterTitle").content = document.title;
+              document.getElementById("twitterDescription").content = document.getElementById("metaDescription").content;
+          }
+
+          // Redirect to video after 2 seconds
+          function redirectToVideo() {
               setTimeout(() => {
                   window.location.href = "rickroll.mp4";  // Redirect to the video
               }, 2000);  // 2 seconds delay before redirect
           }
 
-          window.onload = redirectWithMeta;
+          // Run on page load
+          function onload() {
+              setMeta();
+              redirectToVideo();
+          }
+
+          window.onload = onload;
        </script>
    </body>
 </html>
