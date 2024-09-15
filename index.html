@@ -40,15 +40,30 @@
                document.querySelector('meta[name="description"]').setAttribute("content", randomDescription);
            }
 
+           function onVideoLoaded() {
+               // Show video after it's loaded
+               const videoElement = document.getElementById("rickrollVideo");
+               videoElement.style.display = "block";  // Make video visible
+               videoElement.play();  // Start playing the video
+           }
+
            function onload() {
                setMetaTags();
+
+               const videoElement = document.getElementById("rickrollVideo");
+               
+               // Hide the video until it's loaded
+               videoElement.style.display = "none";
+               
+               // Wait for video to preload before showing it
+               videoElement.oncanplaythrough = onVideoLoaded;
            }
 
            window.onload = onload;
        </script>
    </head>
    <body>
-       <video autoplay loop width="100%">
+       <video id="rickrollVideo" preload="auto" loop width="100%">
            <source src="rickroll.mp4" type="video/mp4">
            Sorry, your browser doesn't support embedded videos.
        </video>
