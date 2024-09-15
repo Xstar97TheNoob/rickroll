@@ -2,12 +2,10 @@
 <html>
    <head>
        <meta name="description" id="metaDescription" content="">
-       <title></title>
    </head>
    <body>
        <video autoplay loop width="100%">
-           <source src="/rickroll.mp4" type="video/mp4">
-           <source src="https://github.com/Xstar97TheNoob/rickroll/raw/refs/heads/master/rickroll.mp4" type="video/mp4">
+           <source src="rickroll.mp4" type="video/mp4">
            Sorry, your browser doesn't support embedded videos.
        </video>
        <script>
@@ -38,18 +36,58 @@
               "This video is going viral for all the right reasons!"
           ];
 
-          // Function to set a random title and description
-          function setRandomMeta() {
+          // Function to get random title and description
+          function getRandomMeta() {
               const randomIndex = Math.floor(Math.random() * titles.length);
-              document.title = titles[randomIndex]; // Set random title
-              document.getElementById("metaDescription").content = descriptions[randomIndex]; // Set random description
+              return {
+                  title: titles[randomIndex],
+                  description: descriptions[randomIndex]
+              };
           }
 
-          function onload() {
-              setRandomMeta();
+          // Function to get title and description by id
+          function getMetaById(id) {
+              const index = parseInt(id, 10);
+              if (index >= 0 && index < titles.length) {
+                  return {
+                      title: titles[index],
+                      description: descriptions[index]
+                  };
+              } else {
+                  return getRandomMeta(); // Fallback to random if id is out of bounds
+              }
           }
 
-          window.onload = onload;
+          // Function to handle redirect after setting meta info
+          function redirectWithMeta() {
+              const currentURL = new URL(window.location.href);
+              const params = new URLSearchParams(currentURL.search);
+
+              let meta;
+              
+              // Check if 'id' param exists
+              if (params.has("id")) {
+                  meta = getMetaById(params.get("id"));
+              } else {
+                  meta = getRandomMeta();
+              }
+
+              // Override if 'title' and 'description' params exist
+              if (params.has("title") && params.has("description")) {
+                  document.title = params.get("title");
+                  document.getElementById("metaDescription").content = params.get("description");
+              } else {
+                  document.title = meta.title;
+                  document.getElementById("metaDescription").content = meta.description;
+              }
+
+              // Delay redirect to ensure title and description are updated
+              setTimeout(() => {
+                  window.location.href = "rickroll.mp4";  // Redirect to the video
+              }, 2000);  // 2 seconds delay before redirect
+          }
+
+          window.onload = redirectWithMeta;
        </script>
    </body>
 </html>
