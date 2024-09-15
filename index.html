@@ -109,7 +109,7 @@
            <div class="spinner"></div>
            Loading...
        </div>
-       <video id="rickrollVideo" autoplay loop muted>
+       <video id="rickrollVideo" loop>
            <source src="rickroll.mp4" type="video/mp4">
            Sorry, your browser doesn't support embedded videos.
        </video>
@@ -180,24 +180,36 @@
               }, 5000); // Hide toast after 5 seconds
           }
 
-          // Function to ensure video autoplay
-          function ensureAutoplay() {
+          // Function to handle video autoplay
+          function handleAutoplay() {
               var video = document.getElementById('rickrollVideo');
-              video.play().catch(function(error) {
-                  console.log('Autoplay failed:', error);
-                  showToast('Autoplay failed. Please play the video manually.');
+
+              // Attempt to play the video with sound
+              video.play().then(() => {
+                  // Successfully played with sound
+              }).catch((error) => {
+                  // Autoplay failed, mute the video and try again
+                  console.log('Autoplay with sound failed:', error);
+                  video.muted = true;
+                  video.play().then(() => {
+                      // Successfully played with sound after muting
+                  }).catch((error) => {
+                      // Still failed, show toast
+                      console.log('Autoplay with muted sound failed:', error);
+                      showToast('Autoplay failed. Please play the video manually.');
+                  });
               });
           }
 
           // On page load
           window.onload = function() {
               setMeta();
-              
+
               // Show loading overlay and hide it after 2 seconds
               setTimeout(function() {
                   document.getElementById('loadingOverlay').style.display = 'none';
                   document.getElementById('rickrollVideo').style.display = 'block';
-                  ensureAutoplay();
+                  handleAutoplay();
               }, 2000); // Show loading overlay for 2 seconds
           };
        </script>
